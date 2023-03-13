@@ -11,6 +11,8 @@ def index():
     if request.method == 'POST':
         prompt = request.form['prompt']
         filename = request.form['filename']
+        query_dir = "recent_q"
+        filepath = os.path.join(query_dir, filename)
         api_endpoint = "https://api.openai.com/v1/completions"
         api_key = os.getenv("OPENAI_API_KEY")
 
@@ -30,13 +32,13 @@ def index():
 
         if response.status_code == 200:
             response_text = response.json()["choices"][0]["text"]
-            with open(filename, "w") as file:
+            with open(filepath, "w") as file:
                 file.write(response_text)
         else:
             return f"Request failed with status code {str(response.status_code)}"
 
         # Read the contents of the file and display it
-        with open(filename, "r") as file:
+        with open(filepath, "r") as file:
             file_contents = file.read()
 
         # Render the index page with the file contents as context
@@ -62,8 +64,8 @@ def recent_calls():
 @app.route("/query")
 def query():
     filename = request.args.get("filename")
-    filepath = os.path.join("recent_q", filename)
-
+    query_dir = "recent_q"
+    filepath = os.path.join(query_dir, filename)
     with open(filepath, "r") as file:
         file_contents = file.read()
 
@@ -73,6 +75,8 @@ def query():
 def result():
     prompt = request.form['prompt']
     filename = request.form['filename']
+    query_dir = "recent_q"
+    filepath = os.path.join(query_dir, filename) 
     api_endpoint = "https://api.openai.com/v1/completions"
     api_key = os.getenv("OPENAI_API_KEY")
 
@@ -92,13 +96,13 @@ def result():
 
     if response.status_code == 200:
         response_text = response.json()["choices"][0]["text"]
-        with open(filename, "w") as file:
+        with open(filepath, "w") as file:
             file.write(response_text)
     else:
         return f"Request failed with status code {str(response.status_code)}"
 
     # Read the contents of the file and display it
-    with open(filename, "r") as file:
+    with open(filepath, "r") as file:
         file_contents = file.read()
 
     return file_contents

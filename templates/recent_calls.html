@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}File Contents{% endblock %}
+{% block title %}{% endblock %}
 
 {% block content %}
 
@@ -16,7 +16,6 @@
         <li><a href="{{ link.url }}">{{ link.filename }}</a></li>
     {% endfor %}
     </ul>
-    <a href="{{ url_for('index') }}">Back to homepage</a>
 </body>
 </html>
 
