@@ -28,11 +28,11 @@ jobs:
           context: .
           push: false
           tags: flask-app:latest
-
+          
       - name: Run Container
         run: |
           docker run -d -p 5000:5000 flask-app:latest
-          sleep 10
+          sleep 30
 
       - name: Test Flask App
         run: |
