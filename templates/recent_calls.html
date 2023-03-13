@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}File Contents{% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recent Queries</title>
+</head>
+<body>
+    <h1>Recent Queries</h1>
+    <ul>
+    {% for link in links %}
+        <li><a href="{{ link.url }}">{{ link.filename }}</a></li>
+    {% endfor %}
+    </ul>
+    <a href="{{ url_for('index') }}">Back to homepage</a>
+</body>
+</html>
+
+{% endblock %}
+
+

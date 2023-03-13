@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}File Contents{% endblock %}
+
+{% block content %}
+ 
+<form method='POST' action='/result'>
+    <label for='prompt'>Prompt:</label>
+    <input type='text' name='prompt' id='prompt'>
+    <br><br>
+    <label for='filename'>Filename:</label>
+    <input type='text' name='filename' id='filename'>
+    <br><br>
+    <input type='submit' value='Submit'>
+</form>
+<a href="{{ url_for('recent_calls') }}">View recent queries</a>
+
+{% endblock %}
+
+
+
+
+
+
