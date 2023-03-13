@@ -1,0 +1,42 @@
+name: Build and Test Docker Container
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install Dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install -r requirements.txt
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: false
+          tags: flask-app:latest
+
+      - name: Run Container
+        run: |
+          docker run -d -p 5000:5000 flask-app:latest
+          sleep 10
+
+      - name: Test Flask App
+        run: |
+          curl -X GET "http://localhost:5000" -w "\n"
+
+      - name: Stop Container
+        run: docker stop $(docker ps -q)
